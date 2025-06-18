@@ -7,7 +7,7 @@ const template: Template = {
   basePdf: BLANK_A4_PDF,
   schemas: [
     [
-      
+
     ],
   ],
 };
@@ -41,5 +41,21 @@ export class PdfThing implements AfterViewInit {
         }
       }
     })
+  }
+
+  async downloadPdf() {
+    const inputs = [{}];
+    const pdf = await generate({
+      template: template,
+      inputs
+    });
+    const blob = new Blob([pdf], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    // return url of download
+          const link = document.createElement('a');
+      link.href = url;
+      link.download = 'filled-document.pdf';
+      link.click();
+    console.log(link);
   }
 }
